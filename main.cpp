@@ -7,7 +7,7 @@
 int main()
 {
     // Get file size
-    FILE* file_ptr = fopen("test.txt", "rt");    // fread убирает \r
+    FILE* file_ptr = fopen("test.txt", "rt");    // fread remove \r
     // FILE* file_ptr = fopen("test.txt", "rb");
     if (!file_ptr)
     {
@@ -23,8 +23,8 @@ int main()
     char* buffer = (char*) calloc(size + 1, sizeof(char));
     assert(buffer);
 
-    fread(buffer, sizeof(char), size, file_ptr);
-    if (!fclose(file_ptr))
+    fread(buffer, sizeof(char), size, file_ptr); // Try read()
+    if (fclose(file_ptr))
     {
         printf("Error at file closing");
         return 1;
@@ -44,10 +44,13 @@ int main()
 
     // Without sorting yet
     copy_lines_ptrs_to_arr(lines_ptrs, buffer);
-    for (size_t i = 0; i < lines_amount; i++)
-    {
-        printf("%s\n", lines_ptrs[i]);
-    }
+    write_lines_to_file(lines_ptrs, stdout);
+
+//     for (size_t i = 0; i < lines_amount; i++)
+//     {
+//         printf("i = <%zu>\n", i);
+//         printf("%s\n", lines_ptrs[i]);
+//     }
 
     free(buffer);
     free(lines_ptrs);
