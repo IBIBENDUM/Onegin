@@ -30,7 +30,7 @@ size_t get_char_amount(const char* const string, const char ch)
     return amount;
 }
 
-void copy_lines_ptrs_to_arr(char** arr, char* string) // расставить const
+void parse_lines_to_arr(char** arr, char* string) // расставить const
 {
     assert(arr);
     assert(string);

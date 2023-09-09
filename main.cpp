@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <io.h>
 #include <stdlib.h>
 #include <assert.h>
 
@@ -8,6 +9,7 @@ int main()
 {
     // Get file size
     FILE* file_ptr = fopen("test.txt", "rt");    // fread remove \r
+    // int file_ptr1 = open("test.txt", 0);    // fread remove \r
     // FILE* file_ptr = fopen("test.txt", "rb");
     if (!file_ptr)
     {
@@ -24,6 +26,7 @@ int main()
     assert(buffer);
 
     fread(buffer, sizeof(char), size, file_ptr); // Try read()
+    // read(file_ptr1, buffer, size); // Try read()
     if (fclose(file_ptr))
     {
         printf("Error at file closing");
@@ -43,7 +46,7 @@ int main()
     assert(lines_ptrs);
 
     // Without sorting yet
-    copy_lines_ptrs_to_arr(lines_ptrs, buffer);
+    parse_lines_to_arr(lines_ptrs, buffer);
     write_lines_to_file(lines_ptrs, stdout);
 
 //     for (size_t i = 0; i < lines_amount; i++)
