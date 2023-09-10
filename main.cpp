@@ -5,12 +5,20 @@
 
 #include "textlib.h"
 
+#ifdef NDEBUG
+    #define DEBUG(FORMAT, ...)
+#else
+    #define DEBUG(FORMAT, ...)\
+    do {\
+        printf(FORMAT, __VA_ARGS__);\
+    } while(0)
+#endif
 int main()
 {
     // Get file size
-    FILE* file_ptr = fopen("test.txt", "rt");    // fread remove \r
-    // int file_ptr1 = open("test.txt", 0);    // fread remove \r
-    // FILE* file_ptr = fopen("test.txt", "rb");
+    // FILE* file_ptr = fopen("test.txt", "rt");    // fread remove \r
+    // int file_ptr1 = open("test.txt", 0);
+    FILE* file_ptr = fopen("test.txt", "rb");
     if (!file_ptr)
     {
         printf("Error at file open");
@@ -19,8 +27,7 @@ int main()
 
     size_t size = get_file_size(file_ptr);
 
-    // BAH: Make debug info only for debug compilation
-    printf("file_size = <%zu>\n", size); // size counts \n as 2 symbols: \r\n
+    DEBUG("file_size = <%zu>\n", size); // size counts \n as 2 symbols: \r\n
 
     char* buffer = (char*) calloc(size + 1, sizeof(char));
     assert(buffer);
@@ -33,27 +40,23 @@ int main()
         return 1;
     }
 
-    for (size_t i = 0; i < size; i++)
+    for (size_t i = 0; i < size + 1; i++)
     {
-        printf("buffer[%zu] = <%d>\n", i, buffer[i]);
+        DEBUG("buffer[%zu] = <%d>\n", i, buffer[i]);
     }
-    printf("%s\n", buffer);
+    DEBUG("%s\n", buffer);
 
     size_t lines_amount = get_char_amount(buffer, '\n');
-    printf("lines_amount = <%zu>\n", lines_amount);
+    DEBUG("lines_amount = <%zu>\n", lines_amount);
 
     char** lines_ptrs = (char**) calloc(lines_amount, sizeof(char**));
     assert(lines_ptrs);
 
-    // Without sorting yet
     parse_lines_to_arr(lines_ptrs, buffer);
     write_lines_to_file(lines_ptrs, stdout);
-
-//     for (size_t i = 0; i < lines_amount; i++)
-//     {
-//         printf("i = <%zu>\n", i);
-//         printf("%s\n", lines_ptrs[i]);
-//     }
+    printf("------------------\n");
+    sort_lines(lines_ptrs, lines_amount, sizeof(lines_ptrs[0]), strcmp_without_punctuation);
+    write_lines_to_file(lines_ptrs, stdout);
 
     free(buffer);
     free(lines_ptrs);
