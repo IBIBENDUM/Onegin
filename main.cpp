@@ -2,41 +2,42 @@
 #include <io.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <string.h>
 
 #include "textlib.h"
 
-#ifdef NDEBUG
-    #define DEBUG(FORMAT, ...)
-#else
-    #define DEBUG(FORMAT, ...)\
-    do {\
-        printf(FORMAT, __VA_ARGS__);\
-    } while(0)
-#endif
+const char* file_in_name = "test.txt";
+const char* file_out_name = "output.txt";
 int main()
 {
-    // Get file size
-    // FILE* file_ptr = fopen("test.txt", "rt");    // fread remove \r
+    // FILE* file_ptr = fopen(file_in_name, "rt");
     // int file_ptr1 = open("test.txt", 0);
     FILE* file_ptr = fopen("test.txt", "rb");
     if (!file_ptr)
     {
-        printf("Error at file open");
+        perror("Error at file open");
         return 1;
     }
 
-    size_t size = get_file_size(file_ptr);
-
-    DEBUG("file_size = <%zu>\n", size); // size counts \n as 2 symbols: \r\n
+    ssize_t size = get_file_size(file_ptr);
+    if (size == -1)
+    {
+        return -1;
+    }
+    DEBUG("file_size = <%zu>\n", size);
 
     char* buffer = (char*) calloc(size + 1, sizeof(char));
-    assert(buffer);
+    if (!buffer)
+    {
+        perror("Error at memory allocation");
+    }
 
     fread(buffer, sizeof(char), size, file_ptr); // Try read()
-    // read(file_ptr1, buffer, size); // Try read()
+    // read(file_ptr1, buffer, size);
+
     if (fclose(file_ptr))
     {
-        printf("Error at file closing");
+        perror("Error at file closing");
         return 1;
     }
 
@@ -46,17 +47,38 @@ int main()
     }
     DEBUG("%s\n", buffer);
 
-    size_t lines_amount = get_char_amount(buffer, '\n');
+    size_t lines_amount = get_lines_amount(buffer);
     DEBUG("lines_amount = <%zu>\n", lines_amount);
 
     char** lines_ptrs = (char**) calloc(lines_amount, sizeof(char**));
     assert(lines_ptrs);
 
     parse_lines_to_arr(lines_ptrs, buffer);
+
+
+
+    FILE* file_out = fopen(file_out_name, "w");
+    if (!file_out)
+    {
+        perror("Error at file open");
+        return 1;
+    }
+
+    fprintf(stdout, "-----------------------------------\n");
+    sort_lines(lines_ptrs, lines_amount - 1, sizeof(lines_ptrs[0]), compare_lines_forward);
     write_lines_to_file(lines_ptrs, stdout);
-    printf("------------------\n");
-    sort_lines(lines_ptrs, lines_amount, sizeof(lines_ptrs[0]), strcmp_without_punctuation);
+    fprintf(stdout, "-----------------------------------\n");
+    sort_lines(lines_ptrs, lines_amount - 1, sizeof(lines_ptrs[0]), compare_lines_backward);
     write_lines_to_file(lines_ptrs, stdout);
+    fprintf(stdout, "-----------------------------------\n");
+    fprintf(stdout, "%s\n", buffer);
+
+    if (fclose(file_out))
+    {
+        perror("Error at file closing");
+        return 1;
+    }
+
 
     free(buffer);
     free(lines_ptrs);
