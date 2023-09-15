@@ -4,6 +4,7 @@
 #include "textlib.h"
 
 const char* file_in_name = "input.txt";
+// const char* file_in_name = "test.txt";
 const char* file_out_name = "output.txt";
 
 int main()
@@ -30,8 +31,7 @@ int main()
         return 1;
     }
 
-
-// Make function for this
+// Make function for this??
     fprintf(file_out, "\nSorted forward\n");
     print_seperator(file_out);
     sort_lines(lines_ptrs, lines_amount - 1, sizeof(lines_ptrs[0]), compare_lines_forward);

@@ -179,12 +179,6 @@ int compare_lines(const char* line_1, const char* line_2, const int direction)
     line_1 = move_to_alphabet_sym(line_1, direction);
     line_2 = move_to_alphabet_sym(line_2, direction);
 
-    // Move empty lines to end??
-    if (*line_1 == '\n')
-        return 1;
-    if (*line_2 == '\n')
-        return -1;
-
     // What if "ABC\n" and "ABC\n" reverse comparison?
     while (*line_1 == *line_2)
     {
@@ -217,11 +211,7 @@ int compare_lines_backward(const void* line_1_ptr, const void* line_2_ptr)
     assert(line_1_ptr);
     assert(line_2_ptr);
 
-    const char* str_1 = *((const char**) line_1_ptr);
-    const char* str_2 = *((const char**) line_2_ptr);
-
-    // Make line struct or realisation by pointer arithmetic
-    return compare_lines(str_1 + strcspn(str_1, "\n") - 1, str_2 + strcspn(str_2, "\n") - 1, COMPARE_BACKWARD);
+    return compare_lines(*(((const char**) line_1_ptr) + 1) - 2, *(((const char**) line_2_ptr) + 1) - 2, COMPARE_BACKWARD);
 }
 
 void swap_values(void* a, void* b, const size_t size)
@@ -256,6 +246,10 @@ void sort_lines(void* data, size_t size, size_t elem_size,
     assert(data);
     assert(compare_func);
 
+// вывои=дить массив цветным (левее лефт синий правее райт желтый и тд)
+// сделать алгоритм на интах
+// сделать алгоритм на чарах
+// закладывать отладку заранее
 
 //  First sort (selection sort)
     for (size_t pass_number = 0; pass_number < size; pass_number++)
