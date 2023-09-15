@@ -4,32 +4,20 @@
 #include <string.h>
 #include <ctype.h>
 #include <assert.h>
+#include <sys/stat.h>
+#include <io.h>
+#include <fcntl.h>
 
 #include "textlib.h"
 
-ssize_t get_file_size(FILE* file_ptr)
+ssize_t get_file_size(const int file_descriptor)
 {
-    assert(file_ptr);
+    assert(file_descriptor > -1);
+    struct stat file_info;
+    if (fstat(file_descriptor, &file_info) != -1)
+        return (ssize_t) file_info.st_size;
 
-    // fseek + ftell realization
-    size_t prev_pos = ftell(file_ptr);
-    if (prev_pos != -1)
-    {
-        if (!fseek(file_ptr, 0, SEEK_END));
-        {
-            size_t size = ftell(file_ptr);
-            if (size != -1)
-            {
-                if (!fseek(file_ptr, prev_pos, SEEK_SET));
-                    return size;
-            }
-        }
-    }
-    printf("Error at getting file size");
     return -1;
-
-    // BAH: Make fstat realization
-
 }
 
 size_t get_char_amount(const char* const string, const char ch)
@@ -43,20 +31,20 @@ size_t get_char_amount(const char* const string, const char ch)
 
 size_t get_lines_amount(const char* const string)
 {
-    assert(string);
     return get_char_amount(string, '\n') + 1;
 }
 
+// Needs free()
 char* read_file(const char* file_name)
 {
-    FILE* file_ptr = fopen(file_name, "rb");
-    if (!file_ptr)
+    const int file_descriptor = open(file_name, O_RDONLY);
+    if (file_descriptor == -1)
     {
-        perror("Error at file open");
+        perror("Couldn't open file");
         return NULL;
     }
 
-    ssize_t size = get_file_size(file_ptr);
+    const ssize_t size = get_file_size(file_descriptor);
     if (size == -1)
     {
         perror("Couldn't get file size");
@@ -70,9 +58,13 @@ char* read_file(const char* file_name)
         return NULL;
     }
 
-    fread(buffer, sizeof(char), size, file_ptr); // Try read()
+    if (read(file_descriptor, buffer, size) == -1)
+    {
+        perror("Error at reading file");
+        return NULL;
+    }
 
-    if (fclose(file_ptr))
+    if (close(file_descriptor))
     {
         perror("Error at file closing");
         return NULL;
@@ -86,11 +78,18 @@ char* read_file(const char* file_name)
     return buffer;
 }
 
+// Needs free()
 char** parse_lines_to_arr(char* string, const size_t lines_amount)
 {
     assert(string);
 
     char** lines_ptrs = (char**) calloc(lines_amount, sizeof(char**));
+    if (!lines_ptrs)
+    {
+        perror("Error at memory allocation");
+        return NULL;
+    }
+
     char** arr = lines_ptrs;
     *arr = string;
     char* ch_ptr = string;
@@ -105,6 +104,7 @@ void print_line(const char* str, FILE* file_ptr)
     assert(str);
     assert(file_ptr);
 
+    // BAH: Make line struct
     size_t len = strcspn(str, "\n") + 1; // +1 for \n itself
     if (len > 2) // Dont print empty lines
         fwrite(str, sizeof(char), len, file_ptr);
@@ -145,6 +145,7 @@ void write_in_dictionary_format(const char* const* str_ptr, FILE* file_ptr)
     write_dictionaty_separator(prev_symbol, file_ptr);
     while (*str_ptr)
     {
+        // BAH: Make line struct
         size_t len = strcspn(*str_ptr, "\n") + 1; // +1 for \n itself
         if (len > 2) // Dont print empty lines
         {
@@ -161,7 +162,7 @@ void write_in_dictionary_format(const char* const* str_ptr, FILE* file_ptr)
     }
 }
 
-const char* move_to_alphabet_sym(const char* str, int direction)
+const char* move_to_alphabet_sym(const char* str, const int direction)
 {
     assert(str);
 
@@ -172,7 +173,7 @@ const char* move_to_alphabet_sym(const char* str, int direction)
     return str;
 }
 
-int compare_lines(const char* line_1, const char* line_2, int direction)
+int compare_lines(const char* line_1, const char* line_2, const int direction)
 {
     // Skip leading non alphabet symbols
     line_1 = move_to_alphabet_sym(line_1, direction);
@@ -184,6 +185,7 @@ int compare_lines(const char* line_1, const char* line_2, int direction)
     if (*line_2 == '\n')
         return -1;
 
+    // What if "ABC\n" and "ABC\n" reverse comparison?
     while (*line_1 == *line_2)
     {
         if (*line_1 == '\n')
@@ -218,10 +220,11 @@ int compare_lines_backward(const void* line_1_ptr, const void* line_2_ptr)
     const char* str_1 = *((const char**) line_1_ptr);
     const char* str_2 = *((const char**) line_2_ptr);
 
+    // Make line struct or realisation by pointer arithmetic
     return compare_lines(str_1 + strcspn(str_1, "\n") - 1, str_2 + strcspn(str_2, "\n") - 1, COMPARE_BACKWARD);
 }
 
-void swap_values(void* a, void* b, size_t size)
+void swap_values(void* a, void* b, const size_t size)
 {
     assert(a);
     assert(b);
@@ -232,12 +235,12 @@ void swap_values(void* a, void* b, size_t size)
     memcpy(b, temp, size);
 }
 
-size_t get_max_idx(size_t step, void* data, size_t size, size_t elem_size, int (*compare_func) (const void* a, const void* b))
+size_t get_max_idx(const size_t pass_number, void* data, const size_t size, const size_t elem_size, int (*compare_func) (const void* a, const void* b))
 {
     assert(data);
 
-    size_t max_idx = step;
-    for (size_t i = step + 1; i < size; i++)
+    size_t max_idx = pass_number;
+    for (size_t i = pass_number + 1; i < size; i++)
     {
         if (compare_func((char*) data + max_idx * elem_size, (char*)data + i * elem_size) > 0)
         {
@@ -255,12 +258,12 @@ void sort_lines(void* data, size_t size, size_t elem_size,
 
 
 //  First sort (selection sort)
-    for (size_t step = 0; step < size; step++)
+    for (size_t pass_number = 0; pass_number < size; pass_number++)
     {
 
-        size_t max_idx = get_max_idx(step, data, size, elem_size, compare_func);
+        size_t max_idx = get_max_idx(pass_number, data, size, elem_size, compare_func);
 
-        swap_values((void*)((size_t)data + step * elem_size),
+        swap_values((void*)((size_t)data + pass_number * elem_size),
                     (void*)((size_t)data + max_idx * elem_size), elem_size);
 
     }

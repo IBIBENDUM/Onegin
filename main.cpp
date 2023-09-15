@@ -30,6 +30,8 @@ int main()
         return 1;
     }
 
+
+// Make function for this
     fprintf(file_out, "\nSorted forward\n");
     print_seperator(file_out);
     sort_lines(lines_ptrs, lines_amount - 1, sizeof(lines_ptrs[0]), compare_lines_forward);
@@ -43,6 +45,8 @@ int main()
     fprintf(file_out, "\nOriginal\n");
     print_seperator(file_out);
     fprintf(file_out, "%s\n", buffer);
+
+    printf("Sorting ended succesfully!");
 
     if (fclose(file_out))
     {
