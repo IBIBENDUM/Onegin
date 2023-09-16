@@ -289,38 +289,38 @@ void sort_lines(void* data, size_t size, size_t elem_size,
     }
 }
 
-int partition(void* arr, size_t start, size_t end, size_t elem_size, int (*compare_func) (const void* a, const void* b))
+int partition(void* arr, size_t left, size_t right, size_t elem_size, int (*compare_func) (const void* a, const void* b))
 {
-    ssize_t left = start, right = end;
-    ssize_t pivot = (left + right) / 2;
+    size_t pivot = (left + right) / 2;
+
     while (left <= right)
     {
-        // DEBUG("left = %d\n", left);
-        // DEBUG("right = %d\n", right);
         while (compare_func((void*)((size_t) arr + left * elem_size), (void*)((size_t) arr + pivot * elem_size)) < 0)
             left++;
+
         while (compare_func((void*)((size_t) arr + right * elem_size), (void*)((size_t) arr + pivot * elem_size)) > 0)
             right--;
-        // DEBUG("new left = %d\n", left);
-        // DEBUG("new right = %d\n", right);
+
         if (left <= right)
         {
             void* left_ptr = (void*)((size_t) arr + left * elem_size);
             void* right_ptr = (void*)((size_t) arr + right * elem_size);
             void* pivot_ptr = (void*)((size_t) arr + pivot * elem_size);
 
-            // BAH: remake this
+            DEBUG("left = %d\n", left);
+            DEBUG("right = %d\n", right);
             if (compare_func(left_ptr, pivot_ptr) == 0)
-                pivot = left;
-            else if (compare_func(right_ptr, pivot_ptr) == 0)
                 pivot = right;
+            else if (compare_func(right_ptr, pivot_ptr) == 0)
+                pivot = left;
+
             swap_values(left_ptr, right_ptr, elem_size);
-            left++, right--;
+            left++;
+            right--;
         }
     }
     return left;
 }
-
 void quick_sort_recursion(void* arr, size_t start, size_t end, size_t elem_size, int (*compare_func) (const void* a, const void* b))
 {
     if (start < end)
@@ -334,5 +334,5 @@ void quick_sort_recursion(void* arr, size_t start, size_t end, size_t elem_size,
 
 void quick_sort(void* arr, size_t size, size_t elem_size, int (*compare_func) (const void* a, const void* b))
 {
-    quick_sort_recursion(arr, 0, size, elem_size, compare_func);
+    quick_sort_recursion(arr, 0, size - 1, elem_size, compare_func);
 }
