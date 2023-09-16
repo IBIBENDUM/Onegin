@@ -57,7 +57,7 @@ void print_line(line* line_ptr, FILE* file_ptr);
 // void write_lines_to_file(const char* const* str_ptr, FILE* file_ptr);
 void write_lines_to_file(line* line_ptr, size_t lines_amount, FILE* file_ptr);
 
-void write_in_dictionary_format(line* line_ptr, size_t lines_amount, FILE* file_ptr);
+void write_in_dictionary_format(line* line_ptr, const size_t lines_amount, FILE* file_ptr);
 
 void print_seperator(FILE* file_ptr);
 

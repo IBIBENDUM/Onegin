@@ -35,12 +35,13 @@ size_t get_lines_amount(const char* const string)
 
 size_t get_line_len(const char* string)
 {
+    // DEBUG("get_line_len:\n");
     return strcspn(string, "\n") + 1;
 }
 
 char* read_file(const char* file_name)
 {
-    DEBUG("Start reading file\n");
+    DEBUG("read_file\n");
     FILE* file_ptr = fopen(file_name, "rb");
     HANDLE_ERROR(file_ptr, "Couldn't open file", NULL);
     DEBUG("File opened\n");
@@ -71,14 +72,18 @@ char* read_file(const char* file_name)
 
 static void initialize_line(line* line_ptr, char* string)
 {
+    // DEBUG("initialize_line():\n");
     line_ptr->start = string;
+    // DEBUG("line_ptr->start = string\n");
     line_ptr->len = get_line_len(string);
+    // DEBUG("Line initialized\n");
 }
 
 // Needs free()
 line* parse_lines_to_arr(char* string, const size_t lines_amount)
 {
     assert(string);
+    DEBUG("parse_lines_to_arr():\n");
 
     line* lines_ptrs = (line*) calloc(lines_amount, sizeof(line*));
     HANDLE_ERROR(lines_ptrs, "Error at memory allocation", NULL);
@@ -86,13 +91,28 @@ line* parse_lines_to_arr(char* string, const size_t lines_amount)
     line* line_ptr = lines_ptrs;
     initialize_line(line_ptr, string);
     char* ch_ptr = string;
-    while (ch_ptr = strchr(ch_ptr, '\n'))
-    {
-        // in one line?
-        ch_ptr++; // move to symbol after \n (new line)
-        line_ptr++;
-        initialize_line(line_ptr, ch_ptr);
-    }
+    // char* prev_ch_ptr = string;
+    // for (size_t i = 1; i < 2; i++)
+    // {
+    //     ch_ptr = strchr(ch_ptr, '\n') + 1;
+    //     initialize_line(line_ptr + i, ch_ptr);
+    // }
+    // while (ch_ptr = strchr(ch_ptr, '\n'))
+    // {
+    //     // in one line?
+    //     ch_ptr++; // move to symbol after \n (new line)
+    //     line_ptr++;
+    //     // initialize_line(line_ptr, ch_ptr);
+    //     prev_ch_ptr = ch_ptr - 2;
+    // }
+
+//     for (size_t i = 0; i < strlen(prev_ch_ptr) + 1; i++)
+//     {
+//         DEBUG("ch_ptr[%zu] = <%d>\n", i, prev_ch_ptr[i]);
+//     }
+//
+//     printf("aaa\n");
+//     printf("%s\n", prev_ch_ptr);
     return lines_ptrs;
 }
 
@@ -110,12 +130,12 @@ void write_lines_to_file(line* line_ptr, size_t lines_amount, FILE* file_ptr)
 {
     assert(line_ptr);
     assert(file_ptr);
-
+    printf("write_lines_to_file():\n");
     for (size_t i = 0; i < lines_amount; i++)
-        print_line(&line_ptr[i], file_ptr);
+        print_line(line_ptr + i, file_ptr);
 }
 
-void write_dictionaty_separator(const char symbol, FILE* file_ptr)
+static void write_dictionary_separator(const char symbol, FILE* file_ptr)
 {
     assert(file_ptr);
 
@@ -129,13 +149,15 @@ void print_seperator(FILE* file_ptr)
     fprintf(file_ptr, "--------------------------------------\n");
 }
 
-void write_in_dictionary_format(line* line_ptr, size_t lines_amount, FILE* file_ptr)
+void write_in_dictionary_format(line* line_ptr, const size_t lines_amount, FILE* file_ptr)
 {
     assert(line_ptr);
     assert(file_ptr);
 
+    printf("write_in_dictionary_format:");
+
     char prev_symbol = *move_to_alphabet_sym(line_ptr[0].start, COMPARE_FORWARD);
-    write_dictionaty_separator(prev_symbol, file_ptr);
+    write_dictionary_separator(prev_symbol, file_ptr);
     for (size_t i = 0; i < lines_amount; i++)
     {
         size_t len = line_ptr[i].len;
@@ -144,7 +166,7 @@ void write_in_dictionary_format(line* line_ptr, size_t lines_amount, FILE* file_
             char symbol = *move_to_alphabet_sym(line_ptr[i].start, COMPARE_FORWARD);
             if (symbol != prev_symbol)
             {
-                write_dictionaty_separator(symbol, file_ptr);
+                write_dictionary_separator(symbol, file_ptr);
                 prev_symbol = symbol;
             }
             fwrite(line_ptr[i].start, sizeof(char), len, file_ptr);
