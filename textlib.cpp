@@ -70,31 +70,40 @@ char* read_file(const char* file_name)
         return NULL;
     }
 
-    for (size_t i = 0; i < size + 1; i++)
-    {
-        DEBUG("buffer[%zu] = <%d>\n", i, buffer[i]);
-    }
+        for (size_t i = 0; i < size + 1; i++)
+        {
+            DEBUG("buffer[%zu] = <%d>\n", i, buffer[i]);
+        }
 
     return buffer;
 }
 
 // Needs free()
-char** parse_lines_to_arr(char* string, const size_t lines_amount)
+line* parse_lines_to_arr(char* string, const size_t lines_amount)
 {
     assert(string);
 
-    char** lines_ptrs = (char**) calloc(lines_amount, sizeof(char**));
+    line* lines_ptrs = (line*) calloc(lines_amount, sizeof(line*));
     if (!lines_ptrs)
     {
         perror("textlib.cpp: Error at memory allocation");
         return NULL;
     }
 
-    char** arr = lines_ptrs;
-    *arr = string;
+    line* line_ptr = lines_ptrs;
+    line_ptr->start = string;
     char* ch_ptr = string;
+
+    // я даун!!!
     while (ch_ptr = strchr(ch_ptr, '\n'))
-        *++arr = ++ch_ptr;
+    {
+        line_ptr->end = ch_ptr;
+        ch_ptr++;
+        line_ptr++;
+        line_ptr->start = ch_ptr;
+    }
+
+    line_ptr->end = string + strlen(string) - 1;
 
     return lines_ptrs;
 }
@@ -110,15 +119,18 @@ void print_line(const char* str, FILE* file_ptr)
         fwrite(str, sizeof(char), len, file_ptr);
 }
 
-void write_lines_to_file(const char* const* str_ptr, FILE* file_ptr)
+void write_lines_to_file(line* line_ptr, FILE* file_ptr)
 {
-    assert(str_ptr);
+    assert(line_ptr);
     assert(file_ptr);
 
-    while (*str_ptr)
+    char* line = line_ptr->start;
+    while (line)
     {
-        print_line(*str_ptr, file_ptr);
-        str_ptr++;
+        print_line(line, file_ptr);
+
+        line_ptr++;
+        line = line_ptr->start;
     }
 }
 
@@ -136,29 +148,32 @@ void print_seperator(FILE* file_ptr)
     fprintf(file_ptr, "--------------------------------------\n");
 }
 
-void write_in_dictionary_format(const char* const* str_ptr, FILE* file_ptr)
+void write_in_dictionary_format(line* line_ptr, FILE* file_ptr)
 {
-    assert(str_ptr);
+    assert(line_ptr);
     assert(file_ptr);
 
-    char prev_symbol = *move_to_alphabet_sym(*str_ptr, COMPARE_FORWARD);
+    char* line = line_ptr->start;
+
+    char prev_symbol = *move_to_alphabet_sym(line, COMPARE_FORWARD);
     write_dictionaty_separator(prev_symbol, file_ptr);
-    while (*str_ptr)
+    while (line)
     {
         // BAH: Make line struct
-        size_t len = strcspn(*str_ptr, "\n") + 1; // +1 for \n itself
+        size_t len = strcspn(line, "\n") + 1; // +1 for \n itself
         if (len > 2) // Dont print empty lines
         {
-            char symbol = *move_to_alphabet_sym(*str_ptr, COMPARE_FORWARD);
+            char symbol = *move_to_alphabet_sym(line, COMPARE_FORWARD);
             DEBUG("<%c> <%c>\n", prev_symbol, symbol);
             if (symbol != prev_symbol)
             {
                 write_dictionaty_separator(symbol, file_ptr);
                 prev_symbol = symbol;
             }
-            fwrite(*str_ptr, sizeof(char), len, file_ptr);
+            fwrite(line, sizeof(char), len, file_ptr);
         }
-        str_ptr++;
+        line_ptr++;
+        line = line_ptr->start;
     }
 }
 
@@ -173,17 +188,17 @@ const char* move_to_alphabet_sym(const char* str, const int direction)
     return str;
 }
 
-int compare_lines(const char* line_1, const char* line_2, const int direction)
+static int compare_lines(const char* line_1, const char* line_2, const int direction)
 {
     // Skip leading non alphabet symbols
     line_1 = move_to_alphabet_sym(line_1, direction);
     line_2 = move_to_alphabet_sym(line_2, direction);
-
-    // Move empty lines to end??
-    if (*line_1 == '\n')
-        return 1;
-    if (*line_2 == '\n')
-        return -1;
+//
+//     // Move empty lines to end??
+//     if (*line_1 == '\n')
+//         return 1;
+//     if (*line_2 == '\n')
+//         return -1;
 
     // What if "ABC\n" and "ABC\n" reverse comparison?
     while (*line_1 == *line_2)
@@ -204,24 +219,27 @@ int compare_lines(const char* line_1, const char* line_2, const int direction)
     return *line_1 - *line_2;
 }
 
-int compare_lines_forward(const void* line_1_ptr, const void* line_2_ptr)
+int compare_lines_forward(const void* line_1_ptr_void, const void* line_2_ptr_void)
 {
-    assert(line_1_ptr);
-    assert(line_2_ptr);
+    assert(line_1_ptr_void);
+    assert(line_2_ptr_void);
 
-    return compare_lines(*(const char**) line_1_ptr, *(const char**) line_2_ptr, COMPARE_FORWARD);
+    const line* line_1_ptr = (const line*) line_1_ptr_void;
+    const line* line_2_ptr = (const line*) line_2_ptr_void;
+
+    return compare_lines(line_1_ptr->start, line_2_ptr->start, COMPARE_FORWARD);
 }
 
-int compare_lines_backward(const void* line_1_ptr, const void* line_2_ptr)
+int compare_lines_backward(const void* line_1_ptr_void, const void* line_2_ptr_void)
 {
-    assert(line_1_ptr);
-    assert(line_2_ptr);
+    assert(line_1_ptr_void);
+    assert(line_2_ptr_void);
 
-    const char* str_1 = *((const char**) line_1_ptr);
-    const char* str_2 = *((const char**) line_2_ptr);
+    const line* line_1_ptr = (const line*) line_1_ptr_void;
+    const line* line_2_ptr = (const line*) line_2_ptr_void;
 
     // Make line struct or realisation by pointer arithmetic
-    return compare_lines(str_1 + strcspn(str_1, "\n") - 1, str_2 + strcspn(str_2, "\n") - 1, COMPARE_BACKWARD);
+    return compare_lines(line_1_ptr->end, line_2_ptr->end, COMPARE_BACKWARD);
 }
 
 void swap_values(void* a, void* b, const size_t size)

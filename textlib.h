@@ -16,11 +16,11 @@ enum COMPARE_TYPE
     COMPARE_BACKWARD = -1
 };
 
-struct line
+typedef struct line_struct
 {
     char* start;
     char* end;
-};
+} line;
 
 ssize_t get_file_size(FILE* file_ptr);
 
@@ -32,19 +32,18 @@ size_t get_lines_amount(const char* const string);
 char* read_file(const char* file_name);
 
 // need free()
-char** parse_lines_to_arr(char* string, const size_t lines_amount);
+line* parse_lines_to_arr(char* string, const size_t lines_amount);
 
 void print_line(const char* str, FILE* file_ptr);
 
-void write_lines_to_file(const char* const* str_ptr, FILE* file_ptr);
+// void write_lines_to_file(const char* const* str_ptr, FILE* file_ptr);
+void write_lines_to_file(line* line_ptr, FILE* file_ptr);
 
-void write_in_dictionary_format(const char* const* str_ptr, FILE* file_ptr);
+void write_in_dictionary_format(line* line_ptr, FILE* file_ptr);
 
 void print_seperator(FILE* file_ptr);
 
 const char* move_to_alphabet_sym(const char* str, int direction);
-
-int compare_lines(const char* line_1, const char* line_2, int direction);
 
 int compare_lines_forward(const void* line_1_ptr, const void* line_2_ptr);
 
