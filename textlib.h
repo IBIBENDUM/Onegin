@@ -22,7 +22,7 @@ typedef struct line_struct
     char* end;
 } line;
 
-ssize_t get_file_size(FILE* file_ptr);
+ssize_t get_file_size(const char* file_name);
 
 size_t get_char_amount(const char* const string, const char ch);
 

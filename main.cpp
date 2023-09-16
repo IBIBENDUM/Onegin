@@ -25,7 +25,7 @@ int main()
     }
 
     write_lines_to_file(lines_ptrs, stdout);
-
+    DEBUG("OK\n");
     // FILE* file_out = fopen(file_out_name, "wb");
     // if (!file_out)
     // {

@@ -10,11 +10,10 @@
 
 #include "textlib.h"
 
-ssize_t get_file_size(const int file_descriptor)
+ssize_t get_file_size(const char* file_name)
 {
-    assert(file_descriptor > -1);
     struct stat file_info;
-    if (fstat(file_descriptor, &file_info) != -1)
+    if (stat(file_name, &file_info) != -1)
         return (ssize_t) file_info.st_size;
 
     return -1;
@@ -34,17 +33,16 @@ size_t get_lines_amount(const char* const string)
     return get_char_amount(string, '\n') + 1;
 }
 
-// Needs free()
 char* read_file(const char* file_name)
 {
-    const int file_descriptor = open(file_name, O_RDONLY);
-    if (file_descriptor == -1)
+    FILE* file_ptr = fopen(file_name, "rb");
+    if (!file_ptr)
     {
         perror("textlib.cpp: Couldn't open file");
         return NULL;
     }
 
-    const ssize_t size = get_file_size(file_descriptor);
+    const ssize_t size = get_file_size(file_name);
     if (size == -1)
     {
         perror("textlib.cpp: Couldn't get file size");
@@ -58,23 +56,22 @@ char* read_file(const char* file_name)
         return NULL;
     }
 
-    if (read(file_descriptor, buffer, size) == -1)
+    if (fread(buffer, sizeof(char), size, file_ptr) == 0)
     {
         perror("textlib.cpp: Error at reading file");
         return NULL;
     }
 
-    if (close(file_descriptor))
+    if (fclose(file_ptr))
     {
         perror("textlib.cpp: Error at file closing");
         return NULL;
     }
 
-        for (size_t i = 0; i < size + 1; i++)
-        {
-            DEBUG("buffer[%zu] = <%d>\n", i, buffer[i]);
-        }
-
+    for (size_t i = 0; i < size + 1; i++)
+    {
+        DEBUG("buffer[%zu] = <%d>\n", i, buffer[i]);
+    }
     return buffer;
 }
 
@@ -127,10 +124,13 @@ void write_lines_to_file(line* line_ptr, FILE* file_ptr)
     char* line = line_ptr->start;
     while (line)
     {
+        printf("------\n%s\n------\n", line);
         print_line(line, file_ptr);
 
+        printf("line_ptr = %p\n", line_ptr);
         line_ptr++;
-        line = line_ptr->start;
+        if (line_ptr)
+            line = line_ptr->start;
     }
 }
 
