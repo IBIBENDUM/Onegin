@@ -6644,6 +6644,7 @@ Sorted backward
         XL
         XL
         (XXXIX,2) XL
+--------
         V
         V
         V
@@ -6828,7 +6829,6 @@ the Neva.''
      but I, in love, was dull and dumb.
      Is spleen his trouble, or the dumb
      Iván Petróvich still is dumb,
---------
      and telling trochee from iambic
      He was without that dithyrambic
      or for a lamentable manic,

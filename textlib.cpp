@@ -40,33 +40,33 @@ char* read_file(const char* file_name)
     const int file_descriptor = open(file_name, O_RDONLY);
     if (file_descriptor == -1)
     {
-        perror("Couldn't open file");
+        perror("textlib.cpp: Couldn't open file");
         return NULL;
     }
 
     const ssize_t size = get_file_size(file_descriptor);
     if (size == -1)
     {
-        perror("Couldn't get file size");
+        perror("textlib.cpp: Couldn't get file size");
         return NULL;
     }
 
     char* buffer = (char*) calloc(size + 1, sizeof(char));
     if (!buffer)
     {
-        perror("Error at memory allocation");
+        perror("textlib.cpp: Error at memory allocation");
         return NULL;
     }
 
     if (read(file_descriptor, buffer, size) == -1)
     {
-        perror("Error at reading file");
+        perror("textlib.cpp: Error at reading file");
         return NULL;
     }
 
     if (close(file_descriptor))
     {
-        perror("Error at file closing");
+        perror("textlib.cpp: Error at file closing");
         return NULL;
     }
 
@@ -86,7 +86,7 @@ char** parse_lines_to_arr(char* string, const size_t lines_amount)
     char** lines_ptrs = (char**) calloc(lines_amount, sizeof(char**));
     if (!lines_ptrs)
     {
-        perror("Error at memory allocation");
+        perror("textlib.cpp: Error at memory allocation");
         return NULL;
     }
 

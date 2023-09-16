@@ -16,6 +16,12 @@ enum COMPARE_TYPE
     COMPARE_BACKWARD = -1
 };
 
+struct line
+{
+    char* start;
+    char* end;
+};
+
 ssize_t get_file_size(FILE* file_ptr);
 
 size_t get_char_amount(const char* const string, const char ch);

@@ -50,11 +50,14 @@ int main()
 
     if (fclose(file_out))
     {
-        perror("Error at file closing");
+        perror("main.cpp: Error at file closing");
         return 1;
     }
 
     free(buffer);
+    buffer = NULL;
+
     free(lines_ptrs);
+    lines_ptrs = NULL;
     return 0;
 }
