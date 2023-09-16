@@ -33,46 +33,46 @@ size_t get_lines_amount(const char* const string)
     return get_char_amount(string, '\n') + 1;
 }
 
+size_t get_line_len(const char* string)
+{
+    return strcspn(string, "\n") + 1;
+}
+
 char* read_file(const char* file_name)
 {
+    DEBUG("Start reading file\n");
     FILE* file_ptr = fopen(file_name, "rb");
-    if (!file_ptr)
-    {
-        perror("textlib.cpp: Couldn't open file");
-        return NULL;
-    }
+    HANDLE_ERROR(file_ptr, "Couldn't open file", NULL);
+    DEBUG("File opened\n");
 
     const ssize_t size = get_file_size(file_name);
-    if (size == -1)
-    {
-        perror("textlib.cpp: Couldn't get file size");
-        return NULL;
-    }
+    HANDLE_ERROR(size != -1, "Couldn't get file size", NULL);
+    DEBUG("Got size\n");
 
     char* buffer = (char*) calloc(size + 1, sizeof(char));
-    if (!buffer)
-    {
-        perror("textlib.cpp: Error at memory allocation");
-        return NULL;
-    }
+    HANDLE_ERROR(buffer, "Error at memory allocation", NULL);
+    DEBUG("Buffer allocated\n");
 
-    if (fread(buffer, sizeof(char), size, file_ptr) == 0)
-    {
-        perror("textlib.cpp: Error at reading file");
-        return NULL;
-    }
+    size_t fread_ret_val = fread(buffer, sizeof(char), size, file_ptr);
+    HANDLE_ERROR(fread_ret_val, "Error at file reading", NULL);
+    DEBUG("File readed\n");
 
-    if (fclose(file_ptr))
-    {
-        perror("textlib.cpp: Error at file closing");
-        return NULL;
-    }
 
-    for (size_t i = 0; i < size + 1; i++)
-    {
-        DEBUG("buffer[%zu] = <%d>\n", i, buffer[i]);
-    }
+    size_t fclose_ret_val = fclose(file_ptr);
+    HANDLE_ERROR(!fclose_ret_val, "Error at closing file", NULL);
+    DEBUG("File closed\n");
+
+    // for (size_t i = 0; i < size + 1; i++)
+    // {
+    //     DEBUG("buffer[%zu] = <%d>\n", i, buffer[i]);
+    // }
     return buffer;
+}
+
+static void initialize_line(line* line_ptr, char* string)
+{
+    line_ptr->start = string;
+    line_ptr->len = get_line_len(string);
 }
 
 // Needs free()
@@ -81,57 +81,38 @@ line* parse_lines_to_arr(char* string, const size_t lines_amount)
     assert(string);
 
     line* lines_ptrs = (line*) calloc(lines_amount, sizeof(line*));
-    if (!lines_ptrs)
-    {
-        perror("textlib.cpp: Error at memory allocation");
-        return NULL;
-    }
+    HANDLE_ERROR(lines_ptrs, "Error at memory allocation", NULL);
 
     line* line_ptr = lines_ptrs;
-    line_ptr->start = string;
+    initialize_line(line_ptr, string);
     char* ch_ptr = string;
-
-    // я даун!!!
     while (ch_ptr = strchr(ch_ptr, '\n'))
     {
-        line_ptr->end = ch_ptr;
-        ch_ptr++;
+        // in one line?
+        ch_ptr++; // move to symbol after \n (new line)
         line_ptr++;
-        line_ptr->start = ch_ptr;
+        initialize_line(line_ptr, ch_ptr);
     }
-
-    line_ptr->end = string + strlen(string) - 1;
-
     return lines_ptrs;
 }
 
-void print_line(const char* str, FILE* file_ptr)
-{
-    assert(str);
-    assert(file_ptr);
-
-    // BAH: Make line struct
-    size_t len = strcspn(str, "\n") + 1; // +1 for \n itself
-    if (len > 2) // Dont print empty lines
-        fwrite(str, sizeof(char), len, file_ptr);
-}
-
-void write_lines_to_file(line* line_ptr, FILE* file_ptr)
+void print_line(line* line_ptr, FILE* file_ptr)
 {
     assert(line_ptr);
     assert(file_ptr);
 
-    char* line = line_ptr->start;
-    while (line)
-    {
-        printf("------\n%s\n------\n", line);
-        print_line(line, file_ptr);
+    size_t len = line_ptr->len;
+    if (len > 2) // Dont print empty lines
+        fwrite(line_ptr->start, sizeof(char), len, file_ptr);
+}
 
-        printf("line_ptr = %p\n", line_ptr);
-        line_ptr++;
-        if (line_ptr)
-            line = line_ptr->start;
-    }
+void write_lines_to_file(line* line_ptr, size_t lines_amount, FILE* file_ptr)
+{
+    assert(line_ptr);
+    assert(file_ptr);
+
+    for (size_t i = 0; i < lines_amount; i++)
+        print_line(&line_ptr[i], file_ptr);
 }
 
 void write_dictionaty_separator(const char symbol, FILE* file_ptr)
@@ -148,32 +129,26 @@ void print_seperator(FILE* file_ptr)
     fprintf(file_ptr, "--------------------------------------\n");
 }
 
-void write_in_dictionary_format(line* line_ptr, FILE* file_ptr)
+void write_in_dictionary_format(line* line_ptr, size_t lines_amount, FILE* file_ptr)
 {
     assert(line_ptr);
     assert(file_ptr);
 
-    char* line = line_ptr->start;
-
-    char prev_symbol = *move_to_alphabet_sym(line, COMPARE_FORWARD);
+    char prev_symbol = *move_to_alphabet_sym(line_ptr[0].start, COMPARE_FORWARD);
     write_dictionaty_separator(prev_symbol, file_ptr);
-    while (line)
+    for (size_t i = 0; i < lines_amount; i++)
     {
-        // BAH: Make line struct
-        size_t len = strcspn(line, "\n") + 1; // +1 for \n itself
-        if (len > 2) // Dont print empty lines
+        size_t len = line_ptr[i].len;
+        if (len > 2)
         {
-            char symbol = *move_to_alphabet_sym(line, COMPARE_FORWARD);
-            DEBUG("<%c> <%c>\n", prev_symbol, symbol);
+            char symbol = *move_to_alphabet_sym(line_ptr[i].start, COMPARE_FORWARD);
             if (symbol != prev_symbol)
             {
                 write_dictionaty_separator(symbol, file_ptr);
                 prev_symbol = symbol;
             }
-            fwrite(line, sizeof(char), len, file_ptr);
+            fwrite(line_ptr[i].start, sizeof(char), len, file_ptr);
         }
-        line_ptr++;
-        line = line_ptr->start;
     }
 }
 
@@ -182,25 +157,19 @@ const char* move_to_alphabet_sym(const char* str, const int direction)
     assert(str);
 
     while (!isalpha(*(str)) && *(str) != '\n')
-    {
         str += direction;
-    }
+
     return str;
 }
 
-static int compare_lines(const char* line_1, const char* line_2, const int direction)
+static int compare_lines(const char* line_1_ptr, const char* line_2_ptr, const int direction)
 {
+    assert(line_1_ptr);
+    assert(line_2_ptr);
     // Skip leading non alphabet symbols
-    line_1 = move_to_alphabet_sym(line_1, direction);
-    line_2 = move_to_alphabet_sym(line_2, direction);
-//
-//     // Move empty lines to end??
-//     if (*line_1 == '\n')
-//         return 1;
-//     if (*line_2 == '\n')
-//         return -1;
+    const char* line_1 = move_to_alphabet_sym(line_1_ptr, direction);
+    const char* line_2 = move_to_alphabet_sym(line_2_ptr, direction);
 
-    // What if "ABC\n" and "ABC\n" reverse comparison?
     while (*line_1 == *line_2)
     {
         if (*line_1 == '\n')
@@ -209,11 +178,11 @@ static int compare_lines(const char* line_1, const char* line_2, const int direc
             DEBUG("--------------------------\n");
             return 0;
         }
-        DEBUG("ch1 = %c ch2 = %c\n", *line_1, *line_2);
+        // DEBUG("ch1 = %c ch2 = %c\n", *line_1, *line_2);
         line_1 += direction;
         line_2 += direction;
     }
-    DEBUG("ch1 = %c ch2 = %c\n", *line_1, *line_2);
+    // DEBUG("ch1 = %c ch2 = %c\n", *line_1, *line_2);
     DEBUG("return %d\n", *line_1 - *line_2);
     DEBUG("--------------------------\n");
     return *line_1 - *line_2;
@@ -238,19 +207,23 @@ int compare_lines_backward(const void* line_1_ptr_void, const void* line_2_ptr_v
     const line* line_1_ptr = (const line*) line_1_ptr_void;
     const line* line_2_ptr = (const line*) line_2_ptr_void;
 
-    // Make line struct or realisation by pointer arithmetic
-    return compare_lines(line_1_ptr->end, line_2_ptr->end, COMPARE_BACKWARD);
+    return compare_lines(line_1_ptr->start + line_1_ptr->len - 2, line_2_ptr->start + line_2_ptr->len - 2, COMPARE_BACKWARD);
 }
 
-void swap_values(void* a, void* b, const size_t size)
+void swap_values(void* a_void_ptr, void* b_void_ptr, const size_t size)
 {
-    assert(a);
-    assert(b);
+    assert(a_void_ptr);
+    assert(b_void_ptr);
 
-    static uint8_t* temp[10] = {};
-    memcpy(temp, a, size);
-    memcpy(a, b, size);
-    memcpy(b, temp, size);
+    char* a_ptr = (char*) a_void_ptr;
+    char* b_ptr = (char*) b_void_ptr;
+
+    for (size_t i = 0; i < size; i++)
+    {
+        char temp = *(a_ptr + i);
+        *(a_ptr + i) = *(b_ptr + i);
+        *(b_ptr + i) = temp;
+    }
 }
 
 size_t get_max_idx(const size_t pass_number, void* data, const size_t size, const size_t elem_size, int (*compare_func) (const void* a, const void* b))
@@ -285,4 +258,52 @@ void sort_lines(void* data, size_t size, size_t elem_size,
                     (void*)((size_t)data + max_idx * elem_size), elem_size);
 
     }
+}
+
+int partition(void* arr, size_t start, size_t end, size_t elem_size, int (*compare_func) (const void* a, const void* b))
+{
+    ssize_t left = start, right = end;
+    ssize_t pivot = (left + right) / 2;
+    while (left <= right)
+    {
+        printf("left = %d\n", left);
+        printf("right = %d\n", right);
+        while (compare_func((void*)((size_t) arr + left * elem_size), (void*)((size_t) arr + pivot * elem_size)) < 0)
+            left++;
+        while (compare_func((void*)((size_t) arr + right * elem_size), (void*)((size_t) arr + pivot * elem_size)) > 0)
+            right--;
+        printf("new left = %d\n", left);
+        printf("new right = %d\n", right);
+        if (left <= right)
+        {
+            void* left_ptr = (void*)((size_t) arr + left * elem_size);
+            void* right_ptr = (void*)((size_t) arr + right * elem_size);
+            void* pivot_ptr = (void*)((size_t) arr + pivot * elem_size);
+
+            if (compare_func(left_ptr, pivot_ptr) == 0)
+                pivot = left;
+            else if (compare_func(right_ptr, pivot_ptr) == 0)
+                pivot = right;
+            swap_values(left_ptr, right_ptr, elem_size);
+            left++;
+            right--;
+        }
+    }
+    return left;
+}
+
+void quick_sort_recursion(void* arr, size_t start, size_t end, size_t elem_size, int (*compare_func) (const void* a, const void* b))
+{
+    if (start < end)
+    {
+        printf("NEW RECURSION\n");
+        size_t right_start = partition(arr, start, end, elem_size, compare_func);
+        quick_sort_recursion(arr, start, right_start - 1, elem_size, compare_func);
+        quick_sort_recursion(arr, right_start, end, elem_size, compare_func);
+    }
+}
+
+void quick_sort(void* arr, size_t size, size_t elem_size, int (*compare_func) (const void* a, const void* b))
+{
+    quick_sort_recursion(arr, 0, size, elem_size, compare_func);
 }
