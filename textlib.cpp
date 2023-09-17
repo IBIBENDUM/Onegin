@@ -289,23 +289,23 @@ void sort_lines(void* data, size_t size, size_t elem_size,
     }
 }
 
-int partition(void* arr, size_t left, size_t right, size_t elem_size, int (*compare_func) (const void* a, const void* b))
+int partition(void* data, size_t left, size_t right, size_t elem_size, int (*compare_func) (const void* a, const void* b))
 {
     size_t pivot = (left + right) / 2;
 
     while (left <= right)
     {
-        while (compare_func((void*)((size_t) arr + left * elem_size), (void*)((size_t) arr + pivot * elem_size)) < 0)
+        while (compare_func((void*)((size_t) data + left * elem_size), (void*)((size_t) data + pivot * elem_size)) < 0)
             left++;
 
-        while (compare_func((void*)((size_t) arr + right * elem_size), (void*)((size_t) arr + pivot * elem_size)) > 0)
+        while (compare_func((void*)((size_t) data + right * elem_size), (void*)((size_t) data + pivot * elem_size)) > 0)
             right--;
 
         if (left <= right)
         {
-            void* left_ptr = (void*)((size_t) arr + left * elem_size);
-            void* right_ptr = (void*)((size_t) arr + right * elem_size);
-            void* pivot_ptr = (void*)((size_t) arr + pivot * elem_size);
+            void* left_ptr = (void*)((size_t) data + left * elem_size);
+            void* right_ptr = (void*)((size_t) data + right * elem_size);
+            void* pivot_ptr = (void*)((size_t) data + pivot * elem_size);
 
             DEBUG("left = %d\n", left);
             DEBUG("right = %d\n", right);
@@ -321,18 +321,39 @@ int partition(void* arr, size_t left, size_t right, size_t elem_size, int (*comp
     }
     return left;
 }
-void quick_sort_recursion(void* arr, size_t start, size_t end, size_t elem_size, int (*compare_func) (const void* a, const void* b))
+void quick_sort_recursion(void* data, size_t start, size_t end, size_t elem_size, int (*compare_func) (const void* a, const void* b))
 {
+    DEBUG("end = %d, start = %d\n", end, start);
     if (start < end)
     {
-        DEBUG("NEW RECURSION\n");
-        size_t right_start = partition(arr, start, end, elem_size, compare_func);
-        quick_sort_recursion(arr, start, right_start - 1, elem_size, compare_func);
-        quick_sort_recursion(arr, right_start, end, elem_size, compare_func);
+        void* start_ptr = (void*)((size_t) data + start * elem_size);
+        void* end_ptr = (void*)((size_t) data + end * elem_size);
+
+        size_t size = end - start + 1;
+        if (size == 3)
+        {
+            sort_lines((void*)((size_t) data + start * elem_size), size, elem_size, compare_func);
+        }
+
+        if (size == 2)\
+        {
+            if (compare_func(start_ptr, end_ptr) > 0)
+                {
+                    swap_values(start_ptr, end_ptr, elem_size);
+                }
+        }
+
+        else
+        {
+            DEBUG("NEW RECURSION\n");
+            size_t right_start = partition(data, start, end, elem_size, compare_func);
+            quick_sort_recursion(data, start, right_start - 1, elem_size, compare_func);
+            quick_sort_recursion(data, right_start, end, elem_size, compare_func);
+        }
     }
 }
 
-void quick_sort(void* arr, size_t size, size_t elem_size, int (*compare_func) (const void* a, const void* b))
+void quick_sort(void* data, size_t size, size_t elem_size, int (*compare_func) (const void* a, const void* b))
 {
-    quick_sort_recursion(arr, 0, size - 1, elem_size, compare_func);
+    quick_sort_recursion(data, 0, size - 1, elem_size, compare_func);
 }
