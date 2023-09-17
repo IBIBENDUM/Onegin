@@ -55,6 +55,7 @@ char* read_file(const char* file_name)
     DEBUG("Buffer allocated\n");
 
     size_t fread_ret_val = fread(buffer, sizeof(char), size, file_ptr);
+    //??
     HANDLE_ERROR(fread_ret_val, "Error at file reading", NULL);
     DEBUG("File readed\n");
 
@@ -328,28 +329,28 @@ void quick_sort_recursion(void* data, size_t start, size_t end, size_t elem_size
     {
         void* start_ptr = (void*)((size_t) data + start * elem_size);
         void* end_ptr = (void*)((size_t) data + end * elem_size);
-
-        size_t size = end - start + 1;
-        if (size == 3)
-        {
-            sort_lines((void*)((size_t) data + start * elem_size), size, elem_size, compare_func);
-        }
-
-        if (size == 2)\
-        {
-            if (compare_func(start_ptr, end_ptr) > 0)
-                {
-                    swap_values(start_ptr, end_ptr, elem_size);
-                }
-        }
-
-        else
-        {
+//
+//         size_t size = end - start + 1;
+//         if (size == 3)
+//         {
+//             sort_lines((void*)((size_t) data + start * elem_size), size, elem_size, compare_func);
+//         }
+//
+//         if (size == 2)
+//         {
+//             if (compare_func(start_ptr, end_ptr) > 0)
+//                 {
+//                     swap_values(start_ptr, end_ptr, elem_size);
+//                 }
+//         }
+//
+//         else
+//         {
             DEBUG("NEW RECURSION\n");
             size_t right_start = partition(data, start, end, elem_size, compare_func);
             quick_sort_recursion(data, start, right_start - 1, elem_size, compare_func);
             quick_sort_recursion(data, right_start, end, elem_size, compare_func);
-        }
+        // }
     }
 }
 
