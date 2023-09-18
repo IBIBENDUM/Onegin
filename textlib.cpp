@@ -10,10 +10,10 @@
 
 #include "textlib.h"
 
-ssize_t get_file_size(const char* file_name)
+ssize_t get_file_size(const ssize_t descriptor)
 {
     struct stat file_info;
-    if (stat(file_name, &file_info) != -1)
+    if (fstat(descriptor, &file_info) != -1)
         return (ssize_t) file_info.st_size;
 
     return -1;
@@ -46,7 +46,11 @@ char* read_file(const char* file_name)
     HANDLE_ERROR(file_ptr, "Couldn't open file", NULL);
     DEBUG("File opened\n");
 
-    const ssize_t size = get_file_size(file_name);
+    const ssize_t descriptor = fileno(file_ptr);
+    HANDLE_ERROR(descriptor != -1, "Couldn't get file descriptor", NULL);
+
+
+    const ssize_t size = get_file_size(descriptor);
     HANDLE_ERROR(size != -1, "Couldn't get file size", NULL);
     DEBUG("Got size\n");
 

@@ -6257,10 +6257,10 @@ LIII
 LIII
 XLIII
 XLIII
-XLIII
-XLIII
-XLIII
 XLIII7
+XLIII
+XLIII
+XLIII
 VIII
 VIII
 VIII
@@ -6427,12 +6427,12 @@ XXVI
 XXVI
 XXVI
 XXVI
-XXXVI
-XXXVI
-XXXVI
-XXXVI
-XXXVI
 XXXVI6
+XXXVI
+XXXVI
+XXXVI
+XXXVI
+XXXVI
 XXXVI
 XXXVI
 XI
@@ -6548,7 +6548,6 @@ XXXV
 XXXV
 XXXV
 XXXV
---------
 X
 X
 X
@@ -10272,6 +10271,7 @@ their hand to grapple slander's cup,
 with a small tray and a teacup.
 neighbours and friends in kindly group,
 my last poor lepton for a sup!
+--------
 Buyánov tried -- got flea in ear.
 Tatyana seeks to attune her ear,
 at the same moment in her ear:

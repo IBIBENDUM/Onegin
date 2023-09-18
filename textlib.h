@@ -40,7 +40,7 @@ typedef struct line_struct
     size_t len;
 } line;
 
-ssize_t get_file_size(const char* file_name);
+ssize_t get_file_size(const ssize_t descriptor);
 
 size_t get_char_amount(const char* const string, const char ch);
 
