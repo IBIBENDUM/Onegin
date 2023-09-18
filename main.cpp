@@ -46,6 +46,7 @@ int main()
     file_out = NULL;
     HANDLE_ERROR(!fclose_ret_val, "Error at file closing", 1);
 
+    empty_lines(lines_ptrs);
     FREE_AND_NULL(buffer);
     FREE_AND_NULL(lines_ptrs);
 

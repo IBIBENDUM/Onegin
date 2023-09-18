@@ -1,12 +1,12 @@
 #include <stdio.h>
-#include <stdint.h>
+// #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include <assert.h>
 #include <sys/stat.h>
-#include <io.h>
-#include <fcntl.h>
+// #include <io.h>
+// #include <fcntl.h>
 
 #include "textlib.h"
 
@@ -54,13 +54,13 @@ char* read_file(const char* file_name)
     HANDLE_ERROR(buffer, "Error at memory allocation", NULL);
     DEBUG("Buffer allocated\n");
 
-    size_t fread_ret_val = fread(buffer, sizeof(char), size, file_ptr);
-    //??
+    const size_t fread_ret_val = fread(buffer, sizeof(char), size, file_ptr);
+    // how to check fread?
     HANDLE_ERROR(fread_ret_val, "Error at file reading", NULL);
     DEBUG("File readed\n");
 
 
-    size_t fclose_ret_val = fclose(file_ptr);
+    const size_t fclose_ret_val = fclose(file_ptr);
     file_ptr = NULL;
     HANDLE_ERROR(!fclose_ret_val, "Error at closing file", NULL);
     DEBUG("File closed\n");
@@ -72,14 +72,30 @@ char* read_file(const char* file_name)
     return buffer;
 }
 
-// static void initialize_line(line* line_ptr, char* string)
-// {
-//     // DEBUG("initialize_line():\n");
-//     line_ptr->start = string;
-//     line_ptr->len = get_line_len(string);
-//     // DEBUG("line_ptr->start = string\n");
-//     // DEBUG("Line initialized\n");
-// }
+static void initialize_line(line* line_ptr, char* string, const size_t len)
+{
+    // DEBUG("initialize_line():\n");
+    line_ptr->start = string;
+    line_ptr->len = len;
+    // DEBUG("line_ptr->start = string\n");
+    // DEBUG("Line initialized\n");
+}
+
+void empty_one_line(line* line_ptr)
+{
+    initialize_line(line_ptr, NULL, 0);
+}
+
+void empty_lines(line* lines_ptrs)
+{
+    line* line_ptr = lines_ptrs;
+    while (line_ptr)
+    {
+        empty_one_line(line_ptr);
+        line_ptr++;
+    }
+    free(lines_ptrs);
+}
 
 // Needs free()
 // add const
@@ -98,11 +114,9 @@ line* parse_lines_to_arr(char* string, const size_t lines_amount)
     size_t i = 0;
     do
     {
-
         size_t line_length = get_line_len(str_ptr);
 
-        line_ptr[i].start = str_ptr;
-        line_ptr[i].len = line_length;
+        initialize_line(&line_ptr[i], str_ptr, line_length);
         // DEBUG("line_length = %d\n", line_length);
         // DEBUG("line_ptr->len = %zu\n", line_length);
 

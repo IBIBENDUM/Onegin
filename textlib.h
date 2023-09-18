@@ -72,4 +72,6 @@ void sort_lines(void* data, size_t size, size_t elem_size,
 
 void quick_sort(void* arr, size_t size, size_t elem_size, int (*compare_func) (const void* a, const void* b));
 
+void empty_lines(line* line_ptr);
+
 #endif
