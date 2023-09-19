@@ -12,7 +12,7 @@
 
 #define COLOR_RESET	    "\033[0m"
 
-#define PAINT_TEXT(X, Y) (X Y COLOR_RESET)
+#define PAINT_TEXT(COLOR, TEXT) (COLOR TEXT COLOR_RESET)
 
 
 #endif

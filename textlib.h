@@ -2,6 +2,7 @@
 #define TEXTLIB_H
 
 #include <stdio.h>
+#include "colors.h"
 
 #ifdef NDEBUG
     #define DEBUG(FORMAT, ...)
@@ -9,7 +10,7 @@
     #define DEBUG(FORMAT, ...)\
     do\
     {\
-        printf(FORMAT, ##__VA_ARGS__);\
+        printf(PAINT_TEXT(COLOR_YELLOW, FORMAT), ##__VA_ARGS__);\
     } while(0)
 #endif
 
