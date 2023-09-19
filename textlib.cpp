@@ -1,12 +1,9 @@
 #include <stdio.h>
-// #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include <assert.h>
 #include <sys/stat.h>
-// #include <io.h>
-// #include <fcntl.h>
 
 #include "textlib.h"
 
@@ -41,7 +38,7 @@ size_t get_line_len(const char* string)
 
 char* read_file(const char* file_name)
 {
-    DEBUG("read_file()\n");
+    DEBUG("read_file() \n");
     FILE* file_ptr = fopen(file_name, "rb");
     HANDLE_ERROR(file_ptr, "Couldn't open file", NULL);
     DEBUG("File opened\n");
@@ -174,6 +171,17 @@ void print_seperator(FILE* file_ptr)
     fprintf(file_ptr, "--------------------------------------\n");
 }
 
+bool check_alphabet_line(line* line_ptr)
+{
+    char* string = line_ptr->start;
+    for (size_t i = 0; i < line_ptr->len; i++)
+    {
+        if (isalpha(string[i]))
+            return true;
+    }
+    return false;
+}
+
 void write_in_dictionary_format(line* line_ptr, const size_t lines_amount, FILE* file_ptr)
 {
     assert(line_ptr);
@@ -185,16 +193,19 @@ void write_in_dictionary_format(line* line_ptr, const size_t lines_amount, FILE*
     write_dictionary_separator(prev_symbol, file_ptr);
     for (size_t i = 0; i < lines_amount; i++)
     {
-        size_t len = line_ptr[i].len;
-        if (len > 2)
+        if (check_alphabet_line(&line_ptr[i]))
         {
-            char symbol = *move_to_alphabet_sym(line_ptr[i].start, COMPARE_FORWARD);
-            if (symbol != prev_symbol)
+            size_t len = line_ptr[i].len;
+            if (len > 2)
             {
-                write_dictionary_separator(symbol, file_ptr);
-                prev_symbol = symbol;
+                char symbol = *move_to_alphabet_sym(line_ptr[i].start, COMPARE_FORWARD);
+                if (symbol != prev_symbol)
+                {
+                    write_dictionary_separator(symbol, file_ptr);
+                    prev_symbol = symbol;
+                }
+                fwrite(line_ptr[i].start, sizeof(char), len, file_ptr);
             }
-            fwrite(line_ptr[i].start, sizeof(char), len, file_ptr);
         }
     }
 }
@@ -203,7 +214,7 @@ const char* move_to_alphabet_sym(const char* str, const int direction)
 {
     assert(str);
 
-    while (!isalpha(*(str)) && *(str) != '\n')
+    while (*(str) != '\n' && !isalpha(*(str)))
         str += direction;
 
     return str;

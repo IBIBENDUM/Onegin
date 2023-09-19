@@ -26,8 +26,8 @@ int main()
     fprintf(file_out, "\nENCYCLOPEDIA\n");
     print_seperator(file_out);
     quick_sort(lines_ptrs, lines_amount - 1, sizeof(lines_ptrs[0]), compare_lines_forward);
-    // write_in_dictionary_format(lines_ptrs, lines_amount, file_out);
-    write_lines_to_file(lines_ptrs, lines_amount, file_out);
+    write_in_dictionary_format(lines_ptrs, lines_amount, file_out);
+    // write_lines_to_file(lines_ptrs, lines_amount, file_out);
 
     fprintf(file_out, "\nMC PUSHKIN\n");
     print_seperator(file_out);

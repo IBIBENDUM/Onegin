@@ -1,217 +1,13 @@
 
 ENCYCLOPEDIA
 --------------------------------------
-{56}
-{186}
-{140}
-{139}
-{141}
-{185}
-{78}
-{55}
-{189}
-{137}
-{79}
-{187}
-{138}
-{188}
-{145}
-{182}
-{58}
-{181}
-{59}
-{76}
-{143}
-{57}
-{142}
-{77}
-{183}
-{144}
-{184}
---------
-{83}
-{196}
-{82}
-{52}
-{195}
-{132}
-{130}
-{84}
-{198}
---------
-{197}
-{51}
-{131}
-{136}
-{54}
-{81}
-{135}
-{80}
-... >2
-< ...
-{190}
-{193}
-{133}
-{194}
-{191}
-{53}
-{134}
-{192}
-{157}
-{65}
-{170}
-{168}
-{70}
-{169}
-{158}
-{172}
-{64}
-{173}
-{155}
-{171}
-{156}
-{71}
-{161}
-{67}
-{165}
-{163}
-{68}
-{162}
-{164}
-{66}
-{167}
-{159}
-{69}
-{160}
-{166}
-{75}
-{149}
-{61}
-{74}
---------
-{150}
-{179}
-{146}
-{180}
-{178}
-{60}
-{147}
-{148}
-{175}
---------
-{154}
-{174}
-{72}
-{63}
-{176}
-{62}
-{177}
-{151}
-{153}
-{73}
---------
-{152}
-... ...
-{112}
-{93}
-{111}
-{219}
-{221}
-{220}
-{41}
-{109}
-{223}
-{224}
-{40}
-{222}
-{94}
-{110}
-{115}
-{215}
-{116}
-{213}
-{214}
-{43}
-{218}
-{113}
-{114}
-{216}
-{217}
-{42}
-... ...
-{92}
-{231}
-{98}
-{103}
-{37}
-{229}
-{104}
-{230}
-{100}
-{99}
-{232}
---------
-{233}
-{102}
-{36}
-{101}
-{108}
-{226}
---------
-{39}
-{225}
-{95}
-{228}
-{97}
-{105}
-{38}
-{96}
-{107}
-{106}
-{227}
-{204}
-{124}
---------
-{88}
-{123}
-{203}
-{48}
-{125}
-{206}
-{121}
-{46}
-{47}
-{122}
-... ...
-{205}
-{201}
-{86}
-{199}
-{85}
-{50}
-{200}
-{129}
-{202}
-{87}
-{126}
-{128}
-{49}
-{127}
-{91}
-{120}
-{210}
-{90}
-{45}
-{208}
-{209}
-{207}
-{212}
-{211}
-{117}
-{44}
-{89}
-{118}
-{119}
+
+----------------------
+
+
+
+----------------------
+A
 5  ``A  deliberate  accumulation of  conventional poetical  formulae by
 A backward look is fraught with danger;
 A ball: the joy of every guest!
@@ -327,6 +123,9 @@ At once Anisia came to greet her,
 At this midnight of my condition,
 8 August Lafontaine (1758-1851), German novelist of family life.
 Away inside that unassuming
+
+----------------------
+B
 Bacchante-like, her flighty prancing;
 Back to his regiment the Lancer,
 11 Ballerina, once courted by Pushkin.
@@ -426,6 +225,9 @@ By now the sun is climbing steeply,
 By now whist's heroes have completed
 ``By virtue of procrastinating
 Byron
+
+----------------------
+C
 1 Café-restaurant in Paris.
 ``Can it be she?'' Eugene in wonder
 Can it be true, it won't come twice --
@@ -452,6 +254,9 @@ Conjecture found unending matter:
 ``Could I just see the house, I wonder?''
 Could it not be that by convention
 2 Count F. P. Tolstoy (1783-1873), well-known artist.
+
+----------------------
+D
 10 Dancer and choreographer.
 Dawn comes in mist and chill; no longer
 Day faded; on the table, glowing,
@@ -472,6 +277,9 @@ Don't let a ghost be your bear-leader,
 Down there, by slow degrees, the stream
 Dressed like -- --,14 duly dreading
 Drive on, Andryushka! quicker, quicker!
+
+----------------------
+E
 Each day, despite the appeals of reason,
 Each one by now is badly needing
 Each others' and their own successes,
@@ -516,6 +324,9 @@ Evgeny, full of inward laughter,
 Evgeny, hating litigation,
 Evgeny, whom the repercussion
 Exhausted by the ballroom's clamour,
+
+----------------------
+F
 Faces before him flash and change
 Fare thee well, and if for ever,
 Farewell the games of golden childhood!
@@ -556,6 +367,9 @@ From that rough spell at last exempted,
 From violent passions fast pulsating
 From widow Clicquot and from Moët,
 Full of obedience and demureness,
+
+----------------------
+G
 6 Gentleman, squire.
 ``Get up, my child, it's time, get up!
 ``Get up: it's gone six! I'll be bound,
@@ -576,6 +390,9 @@ Griboedov
 Guillot, behind a stump in view,
 Gvozdín, Buyánov, Petushkóv
 Gvozdín, exemplary farmer,
+
+----------------------
+H
 Happy a hundredfold, whoever
 Happy is he who's known its fretful
 He asks. She can't accept. Why ever?
@@ -687,6 +504,9 @@ However has he earned so vicious,
 Hurrah! let's start congratulating
 5 Hussar and friend of Pushkin.
 Hussars on leave are racing hither
+
+----------------------
+I
 I
 I
 I
@@ -902,6 +722,9 @@ It's true, I'll not misrepresent them,
 It's true, the magnet-like attraction
 Italian nights, when I'll drink in
 Iván Petróvich still is dumb,
+
+----------------------
+J
 4 Jean Lepage, Parisian gunsmith.
 8 Jean Sbogar, by Charles Nodier, 1818.
 3 Julie, ou la nouvelle Héloise. by Rousseau, 1761.
@@ -909,7 +732,13 @@ Just before dinner, from his labours
 Just facing Tanya's where they're sitting;
 ``Just half a glass more... that will do...
 Just let yourself be your whole care,
+
+----------------------
+K
 Killed!... At this frightful word a-quiver,
+
+----------------------
+L
 L
 L
 L
@@ -975,6 +804,9 @@ Love tyrannises all the ages;
 Love's frantic torments went on beating
 Lovelace, or Grandison, or neither;
 5 Lover of Valérie, by Madame de Krudener, 1803.
+
+----------------------
+M
 Madame de Staël, Bichat,13 Tissot,14
 10 Magazine (1818) edited by A. Izmaylov.
 ``Maidens, pretty maidens all,
@@ -1018,6 +850,9 @@ My pen, as once, no longer hurries
 My soul's like crystal, and tomorrow
 ``My sweet, God warrants me your debtor.''
 ``My sweet, my dearest heart, I'm old,
+
+----------------------
+N
 Napoleon here, intoxicated
 Napoleon's our sole inspiration;
 Nasce una gente a cui 'l morir non dole.
@@ -1083,6 +918,9 @@ Now, she devours, with what attention,
 Now, to my cost it may be true
 ``Nurse, I'm not ill; I... I'm in love.''
 Nursed in the orient's languid weakness,
+
+----------------------
+O
 O Adrian waves, my invocation;
 O Brenta, I'll see you in dream;
 O Russia!
@@ -1162,6 +1000,9 @@ Or, unconsoled by the returning
 Our evanescent northern summer
 Our love is what they most abhor;
 Outside the gate Tatyana parted
+
+----------------------
+P
 Parisian taste invents for one --
 Perhaps however, to be truthful,
 Perhaps some secret apprehension
@@ -1201,7 +1042,13 @@ Public opinion -- here's our idol,
 Pushkin's note.
 Pushkin's note.
 Pushkin's poem The Fountain of Bakhchisarai.
+
+----------------------
+Q
 ``Qu'écrirez-vous sur ces tablettes?''
+
+----------------------
+R
 Rage died, and jealousy's obsession,
 Reader, I wish that, as we parted --
 Reader, the elder sister now
@@ -1220,6 +1067,9 @@ Russia's Terpsichore, shall never
 Russia's old glories and their gleams,
 Russian pancakes were always served;
 11 Russian poet and translator from the French.
+
+----------------------
+S
 Saint Petersburg's fine flower was there --
 5 Satiric poem by Ivan Dimitriev, 1795. The reference is -- summarizing
 Sbogar,8 mysterious through and through,
@@ -1321,6 +1171,9 @@ Such were a young rake's meditations --
 Suddenly, from a crest, she sighted
 Sunk in dejection, she won't hear
 3  ``Sweet-sounding Greek names like  Agathon... etc., are only current
+
+----------------------
+T
 Take Olga's shoulders now -- the beauty!
 Tanya (profoundly Russian being,
 Tanya begins to understand
@@ -1529,9 +1382,15 @@ True, scorn should punish and should bridle
 Tsimlyansky wine, between the meat
 Two hearts there are perhaps that keep
 Two weeks the matchmaker was plying
+
+----------------------
+U
 Uncle, in bed, and near to dying,
 Unforced, as conversation passed,
 Up to the porch our hero's driven:
+
+----------------------
+V
 V
 V
 V
@@ -1571,6 +1430,9 @@ Vladimir shuts the book, for writing
 Vladimir to this casual mention
 Vladimir's challenge found expression
 Vladimir, wealthy and good-looking,
+
+----------------------
+W
 ``Wait, I'll present you -- but you banish
 Walking her horse in introspection
 Walking? The country that you roam
@@ -1663,6 +1525,9 @@ Without romance, or false insistence,
 Worse luck, Larina crawled; the employment
 17 ``Written at Odessa.'' Pushkin's note.
 1 ``Written in Bessarabia.'' Pushkin's note.
+
+----------------------
+X
 X
 X
 X
@@ -1948,6 +1813,9 @@ XXXVIII
 XXXVIII
 (XXXVIII) XXXIX
 (XXXVIII,2) XXXIX
+
+----------------------
+Y
 Yes, spleen was waiting like a sentry,
 Yes, youth divines, in giddy madness,
 Yet -- fear itself she found presented
@@ -1977,6 +1845,9 @@ Young ladies jump for future blisses...
 Your curiosity is burning
 Your horse, blunt-shoed and all unwary,
 ``Your modish world, I'll do without it;
+
+----------------------
+Z
 Zarétsky, sometime king of brawls
 Zaretsky bit his lip. Eugene
 Zaretsky draws up a convention
@@ -1985,6 +1856,9 @@ Zaretsky watched, and stood there grinning.
 Zaretsky, engineer-in-waiting,
 Zhukovsky
 Zizi, my crystal and my gem,
+
+----------------------
+A
 a Lancer -- how she deified him!
 a Lancer wooed and won her hand,
 a Muscovite in Harold's dress,
@@ -2749,6 +2623,9 @@ avert his chest from pistol's click,
 awaits him -- hears nobody coming.
 away from trusting his own eyes.
 away, so cool, so unconcerned?
+
+----------------------
+B
 barrels, and then to drive aside
 bassoons and flutes begin to trip.
 bathed in the moon's inspiring light.
@@ -2966,6 +2843,9 @@ by way of toast to their fair neighbour;
 by what's called machinal reaction,
 by will of Zeus, the high and just,
 by writers of her admiration,
+
+----------------------
+C
 calls out his name... All unavailing:
 calm men with beatific features,
 came distant horns, and gallant singing.
@@ -3036,6 +2916,9 @@ crossed to the window, read it through.
 culture, so far from healing, hurts us;
 custom is despot of mankind.
 custom's bestowed us from on high.
+
+----------------------
+D
 damns the intruders; Tanya lies
 dared clean his nails in front of him,
 daren't look behind her; fairly dashing --
@@ -3104,6 +2987,9 @@ drives home -- and plunging deeper in,
 drunk, eaten, yawned, grown weak and stout,
 due punishment was handed down
 dumb I must perish, and alone.
+
+----------------------
+E
 e sempre bene, gentlemen.
 each coldly plans the other's slaughter...
 each grips his pistol in his hand.
@@ -3158,6 +3044,9 @@ expecting winter, nature waited --
 explodes; wine fizzes up... but stay:
 expose his soul to an intrusion
 eyes rolling, arms uplifted, furious,
+
+----------------------
+F
 faceted muzzles by the rammer;
 facing a belle I loved with passion,
 fades from the view, and in the hush
@@ -3321,6 +3210,9 @@ frozen in his tight-fitting suit;
 fruit liqueurs and an Almanack
 fruits of my labour and my ink...
 full of his usual pith and wit,
+
+----------------------
+G
 galop, mazurka, waltz... Meanwhile
 garden, a modest home, the place
 gave up the ancient Kremlin-keys:
@@ -3359,6 +3251,9 @@ gripped him no more; soon they were raising
 grow cold, and hard, and stiff as stock,
 grows, surges, boils, for lack of room
 guests bow, feet scrape, and children squall.
+
+----------------------
+H
 had been for ever borne off far
 had been imposed by winter's hand;
 had chased me to the world above.''
@@ -3678,6 +3573,9 @@ hunts cheeky flies, with swatter sweeping,
 husband and father as my lot;
 hymnal as, endlessly unfurled,
 hymns of the ages never sound.
+
+----------------------
+I
 if I had power to choose your fashion --
 if I show wit in jesting thus.
 if I'd possessed the slightest reason
@@ -3941,6 +3839,9 @@ its views, its passions, or its cares!
 its wayward tricks, its violent surging,
 its winds had blown him far off course.
 its work, its torture, its enjoyment,
+
+----------------------
+J
 jaws masticate as minutes pass:
 jealously, shyly, I've imported
 jealousy's flame, to light desire;
@@ -3958,9 +3859,15 @@ just sentries to each other calling,
 just there, is talking to the Spanish
 just what the nightmare signifies.
 just yesterday.'' ``And since your christening
+
+----------------------
+K
 kept asking: "shall I live to see"...''
 killing each evening off like that?''
 knowing the offender, he'd been frightened
+
+----------------------
+L
 lacing her stays up very tightly;
 ladies at the fireside confer,
 ladies of riper years, delicious
@@ -4035,6 +3942,9 @@ lost them without regret's contusion,
 love's crown, delectable, awaited
 love's melting dreams shall fill my rhyme,
 loved someone else, not her intended,
+
+----------------------
+M
 made London's dandy his professor.
 made all fates look the same... and so
 made over to them his whole lot,
@@ -4113,6 +4023,9 @@ my tongue kept drawing from the heart --
 my word; no welshing, as I live. >
 my wretched Lensky in his heart
 myself and Eugene, lest a reader
+
+----------------------
+N
 nanny, companion of my youth;
 need not have bristled like a beast;
 neighbour was sure, from this would flow
@@ -4203,6 +4116,9 @@ now ten has struck, his wheels are rolling,
 now things are changed, now we resemble
 now warmth and blossom are on hand,
 now, by green tablecloths awaited,
+
+----------------------
+O
 o fields -- to you I'm vowed at heart.
 objective of his thoughts and joys:
 oblivion of life's stormy ways,
@@ -4495,6 +4411,9 @@ over the modish word ideal,
 over the note holds in suspension
 over the slush, where is he chasing?
 over the waters in a sweep;
+
+----------------------
+P
 packed from the maids' wing to the hall.
 pale transcript of a vivid master,
 paled, flushed, or lost composure's grip --
@@ -4567,8 +4486,14 @@ pursuits of a monotonous breed
 put a strong staff into my hand,
 put back the libel on the table
 puts out the lamps; the whole brigade
+
+----------------------
+Q
 quickly to O... I mean to that...
 quite self-absorbed and unaffected
+
+----------------------
+R
 ``réveillez-vous, belle endormie.''
 radiance of Dian, sits in pain
 raised a dull eye to moon's refulgence,
@@ -4622,6 +4547,9 @@ rumours and threats and premonitions,
 runs after what is sweet, and vain.
 rushed to Anisia's room, to plunder
 rustic to the Russian ear''. Nabokov. See note 3 to Chapter Two.
+
+----------------------
+S
 sacred to children of Apollo!
 sad meditations in her look,
 sadly he mourned for the departed.
@@ -4883,6 +4811,9 @@ sweet old tradition was preserved:
 sweet talk with friends. How many days
 sweet words by which her pain was banned --
 swiftly decayed beyond recall
+
+----------------------
+T
 take any novel, clearly traced
 take leave of my lightheaded youth!
 take wing on spite; that serious men
@@ -5594,6 +5525,9 @@ two pines have tangled at the root;
 two poles that ice had glued like plaster
 two sisters who'd received the initial,9
 two verses of the Aeneid.
+
+----------------------
+U
 unanimous exchange of looks
 unconsciously he let it mount
 under the table's linen shield,
@@ -5623,6 +5557,9 @@ urbane betrayals, and the chilling
 use cunning silence as a screen,
 used in times past to ring a peal
 using overt or covert rules.
+
+----------------------
+V
 (vain twaddle, fables of the ages,
 value the hero of my tale,
 vanishes with his load of dread.
@@ -5631,6 +5568,9 @@ very briefly -- to a  controversy between different literary  cliques  about
 vexation? vainness? heavens above,
 villages flickered far and near,
 visit the family, what d'you say?
+
+----------------------
+W
 wakened at the same hour of night
 walked homeward round the kitchen garden;
 wanders in a distracted way
@@ -5938,7 +5878,13 @@ would settle, on the morrow morning,
 would talk, keep silent, laugh, then frown --
 wound that had seared my Tanya's heart!
 wronged always in disgraceful fashion --
+
+----------------------
+X
 x x x
+
+----------------------
+Y
 years back, to call up many a fable;
 yes, even there its triumph grows.
 yes, focus on them your lorgnette,
@@ -10271,7 +10217,6 @@ their hand to grapple slander's cup,
 with a small tray and a teacup.
 neighbours and friends in kindly group,
 my last poor lepton for a sup!
---------
 Buyánov tried -- got flea in ear.
 Tatyana seeks to attune her ear,
 at the same moment in her ear:
@@ -12036,6 +11981,7 @@ what London calls, with humble duty
 inexorably wed to duty,
 All flourishing; they send their duty.
 meanwhile with a dissembler's duty
+--------
 
 ORIGINAL
 --------------------------------------
