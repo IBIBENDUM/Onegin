@@ -36,32 +36,40 @@ enum COMPARE_TYPE
 
 typedef struct line_struct
 {
-    char* start;
+    wchar_t* start;
     size_t len;
 } line;
 
+typedef struct file_struct
+{
+    wchar_t* file_name;
+    wchar_t* buffer;
+    line* lines_ptrs;
+    size_t line_amounts;
+} file;
+
 ssize_t get_file_size(const ssize_t descriptor);
 
-size_t get_char_amount(const char* const string, const char ch);
+size_t get_char_amount(const wchar_t* const string, const wchar_t ch);
 
-size_t get_lines_amount(const char* const string);
+size_t get_lines_amount(const wchar_t* const string);
 
 // needs free()
-char* read_file(const char* file_name);
+wchar_t* read_file(const char* file_name);
 
 // need free()
-line* parse_lines_to_arr(char* string, const size_t lines_amount);
+line* parse_lines_to_arr(wchar_t* string, const size_t lines_amount);
 
 void print_line(line* line_ptr, FILE* file_ptr);
 
-// void write_lines_to_file(const char* const* str_ptr, FILE* file_ptr);
+// void write_lines_to_file(const wchar_t* const* str_ptr, FILE* file_ptr);
 void write_lines_to_file(line* line_ptr, size_t lines_amount, FILE* file_ptr);
 
 void write_in_dictionary_format(line* line_ptr, const size_t lines_amount, FILE* file_ptr);
 
 void print_seperator(FILE* file_ptr);
 
-const char* move_to_alphabet_sym(const char* str, int direction);
+const wchar_t* move_to_alphabet_sym(const wchar_t* str, int direction);
 
 int compare_lines_forward(const void* line_1_ptr, const void* line_2_ptr);
 
@@ -73,5 +81,7 @@ void sort_lines(void* data, size_t size, size_t elem_size,
 void quick_sort(void* arr, size_t size, size_t elem_size, int (*compare_func) (const void* a, const void* b));
 
 void empty_lines(line* line_ptr);
+
+void print_tatarstan_symbolism(FILE* file_ptr);
 
 #endif
