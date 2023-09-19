@@ -129,24 +129,31 @@ line* parse_lines_to_arr(char* string, const size_t lines_amount)
     return lines_ptrs;
 }
 
+bool check_alphabet_line(line* line_ptr)
+{
+    assert(line_ptr);
+
+    char* string = line_ptr->start;
+    for (size_t i = 0; i < line_ptr->len; i++)
+    {
+        if (isalpha(string[i]))
+            return true;
+    }
+    return false;
+}
+
 void print_line(line* line_ptr, FILE* file_ptr)
 {
     assert(line_ptr);
     assert(file_ptr);
 
-    size_t len = line_ptr->len;
-    if (len > 2) // Dont print empty lines
-        fwrite(line_ptr->start, sizeof(char), len, file_ptr);
+    if (check_alphabet_line(line_ptr))
+    {
+        size_t len = line_ptr->len;
+        if (len > 2) // Dont print empty lines
+            fwrite(line_ptr->start, sizeof(char), len, file_ptr);
+    }
 }
-//
-// void check_empty_line(line* line_ptr)
-// {
-//     char* str = line_ptr->start;
-//     size_t len = line_ptr->len;
-//     if ();
-//     while (!isalpha(*(str)) && *(str) != '\n')
-//         str++;
-// }
 
 void write_lines_to_file(line* line_ptr, size_t lines_amount, FILE* file_ptr)
 {
@@ -169,17 +176,6 @@ void print_seperator(FILE* file_ptr)
     assert(file_ptr);
 
     fprintf(file_ptr, "--------------------------------------\n");
-}
-
-bool check_alphabet_line(line* line_ptr)
-{
-    char* string = line_ptr->start;
-    for (size_t i = 0; i < line_ptr->len; i++)
-    {
-        if (isalpha(string[i]))
-            return true;
-    }
-    return false;
 }
 
 void write_in_dictionary_format(line* line_ptr, const size_t lines_amount, FILE* file_ptr)

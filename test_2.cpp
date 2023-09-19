@@ -1,26 +1,16 @@
 #include <stdio.h>
 #include <locale.h>
-#include <windows.h>
-#include <cwchar>
+#include <fcntl.h>
 
 int main()
 {
-    // setlocale(LC_ALL, "");
-
-    // FILE* file_ptr = fopen("test.txt", "rb");
-    // wchar_t buffer[100] = {};
-    // fread(buffer, 1, 100, file_ptr);
-    FILE* out_ptr = fopen("test_out.txt", "w");
-    char buffer[] = "АБОБА";
-    size_t i =  0;
-    fprintf(out_ptr, "%s\n", buffer);
-    // fputws(L"АБОБА", out_ptr);
-    // wprintf(L"%s\n", buffer);
-    // while (buffer[i])
-    // {
-    //     wprintf(L"char = %c code = %d\n", buffer[i], buffer[i]);
-    //     // putchar(buffer[i]);
-    //     i++;
-    // }
-    // printf("привет!");
+    setlocale(LC_ALL, "");
+    FILE* out_ptr = fopen("test_out.txt", "wb");
+    _setmode(_fileno(out_ptr), 0x00040000);
+    _setmode(_fileno(stdout), 0x00040000);
+    _setmode(_fileno(stdin), 0x00040000);
+    // wchar_t buffer[] = L"АБОБА";
+    wchar_t buffer[] = L"А а Ә ә Б б В в Г г Д д Е е Ё ё Ж ж Җ җ З з И и Й й К к Л л М м Н н Ң ң О о Ө ө П п Р р С с Т т У у Ү ү Ф ф Х х Һ һ Ц ц Ч ч Ш ш Щ щ Ъ ъ Ы ы Ь ь Э э Ю ю Я я";
+    fwrite(buffer, sizeof(buffer[0]), 10, out_ptr);
+    wprintf(L"%s\n", buffer);
 }

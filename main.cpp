@@ -1,17 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 
 #include "textlib.h"
 
-const char* file_in_name = "input.txt";
-// const char* file_in_name = "test.txt";
+// const char* file_in_name = "input.txt";
+const char* file_in_name = "test.txt";
 const char* file_out_name = "output.txt";
 
 int main()
 {
+    // setlocale(LC_ALL, "");
+    // FILE* out_ptr = fopen("test_out.txt", "wb");
+    // _setmode(_fileno(out_ptr), 0x00040000);
+    // _setmode(_fileno(stdout), 0x00040000);
+    // _setmode(_fileno(stdin), 0x00040000);
+    // // wchar_t buffer[] = L"АБОБА";
+    // wchar_t buffer[] = L"А а Ә ә Б б В в Г г Д д Е е Ё ё Ж ж Җ җ З з И и Й й К к Л л М м Н н Ң ң О о Ө ө П п Р р С с Т т У у Ү ү Ф ф Х х Һ һ Ц ц Ч ч Ш ш Щ щ Ъ ъ Ы ы Ь ь Э э Ю ю Я я";
+    // fwrite(buffer, sizeof(buffer[0]), 10, out_ptr);
+    // wprintf(L"%s\n", buffer);
+
     char* buffer = read_file(file_in_name);
     HANDLE_ERROR(buffer, "Error at buffering file", 1);
-
     size_t lines_amount = get_lines_amount(buffer);
     DEBUG("lines_amount = %zu\n", lines_amount);
 
@@ -27,7 +37,6 @@ int main()
     print_seperator(file_out);
     quick_sort(lines_ptrs, lines_amount - 1, sizeof(lines_ptrs[0]), compare_lines_forward);
     write_in_dictionary_format(lines_ptrs, lines_amount, file_out);
-    // write_lines_to_file(lines_ptrs, lines_amount, file_out);
 
     fprintf(file_out, "\nMC PUSHKIN\n");
     print_seperator(file_out);
