@@ -6,6 +6,7 @@
 #include <assert.h>
 
 #include "textlib.h"
+#include "sorts.h"
 
 const char* file_in_name = "onegin_eng.txt";
 const char* file_out_name = "output.txt";
