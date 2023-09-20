@@ -189,7 +189,7 @@ void write_in_dictionary_format(line* line_ptr, const size_t lines_amount, FILE*
     DEBUG("write_in_dictionary_format():\n");
 
     wchar_t prev_symbol = *move_to_alphabet_sym(line_ptr[0].start, COMPARE_FORWARD);
-    write_dictionary_separator(prev_symbol, file_ptr);
+    // write_dictionary_separator(prev_symbol, file_ptr);
     for (size_t i = 0; i < lines_amount; i++)
     {
         if (check_alphabet_line(&line_ptr[i]))

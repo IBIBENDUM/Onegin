@@ -38,7 +38,7 @@ int main(const int argc, char* const* argv)
     DEBUG("START OUTPUT\n");
     fwprintf(file_out, L"ENCYCLOPEDIA\n");
     print_seperator(file_out);
-    qsort(lines_ptrs, lines_amount - 1, sizeof(lines_ptrs[0]), compare_lines_forward);
+    quick_sort(lines_ptrs, lines_amount - 1, sizeof(lines_ptrs[0]), compare_lines_forward);
     write_in_dictionary_format(lines_ptrs, lines_amount, file_out);
 
     fwprintf(file_out, L"\nЧУВАК ЭТО РЕПЧИК\n");
