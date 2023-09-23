@@ -12,7 +12,7 @@ static void swap_values(void* a_void_ptr, void* b_void_ptr, const size_t size)
     char* a_ptr = (char*) a_void_ptr;
     char* b_ptr = (char*) b_void_ptr;
 
-    for (size_t i = 0; i < size; i++)
+    for (size_t i = 0; i < size; i++)  // Or memcpy?
     {
         char temp = *(a_ptr + i);
         *(a_ptr + i) = *(b_ptr + i);
@@ -69,7 +69,7 @@ static int partition(void* data, size_t left, size_t right, size_t elem_size, in
 
         if (left <= right)
         {
-            void* left_ptr = (void*)((size_t) data + left * elem_size);
+            void* left_ptr  = (void*)((size_t) data + left * elem_size);
             void* right_ptr = (void*)((size_t) data + right * elem_size);
             void* pivot_ptr = (void*)((size_t) data + pivot * elem_size);
 
@@ -93,7 +93,7 @@ static void quick_sort_recursion(void* data, size_t start, size_t end, size_t el
     if (start < end)
     {
         void* start_ptr = (void*)((size_t) data + start * elem_size);
-        void* end_ptr = (void*)((size_t) data + end * elem_size);
+        void* end_ptr   = (void*)((size_t) data + end   * elem_size);
 //
 //         size_t size = end - start + 1;
 //         if (size == 3)

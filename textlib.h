@@ -41,13 +41,13 @@ typedef struct line_struct
     size_t len;
 } line;
 
-typedef struct file_struct
-{
-    wchar_t* file_name;
-    wchar_t* buffer;
-    line* lines_ptrs;
-    size_t line_amounts;
-} file;
+// typedef struct file_struct
+// {
+//     wchar_t* file_name;
+//     wchar_t* buffer;
+//     line* lines_ptrs;
+//     size_t line_amounts;
+// } file;
 
 ssize_t get_file_size(const ssize_t descriptor);
 

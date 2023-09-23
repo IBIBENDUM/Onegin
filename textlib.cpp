@@ -11,7 +11,7 @@
 
 ssize_t get_file_size(const ssize_t descriptor)
 {
-    struct stat file_info;
+    struct stat file_info = {};
     if (fstat(descriptor, &file_info) != -1)
         return (ssize_t) file_info.st_size;
 
@@ -49,7 +49,6 @@ wchar_t* read_file(const char* file_name)
 
     const ssize_t descriptor = fileno(file_ptr);
     HANDLE_ERROR(descriptor != -1, "Couldn't get file descriptor", NULL);
-
 
     const ssize_t size = get_file_size(descriptor);
     HANDLE_ERROR(size != -1, "Couldn't get file size", NULL);
@@ -108,9 +107,8 @@ line* parse_lines_to_arr(wchar_t* string, const size_t lines_amount)
     assert(string);
     DEBUG("parse_lines_to_arr():\n");
 
-    line* lines_ptrs = (line*) calloc(lines_amount + 1, sizeof(line));
+    line* lines_ptrs = (line*) calloc(lines_amount + 1, sizeof(lines_ptrs[0]));
     HANDLE_ERROR(lines_ptrs, "Error at memory allocation", NULL);
-
 
     line* line_ptr = lines_ptrs;
     wchar_t* str_ptr = string;
@@ -230,8 +228,6 @@ static int compare_lines(const wchar_t* line_1_ptr, const wchar_t* line_2_ptr, c
     const wchar_t* line_1 = move_to_alphabet_sym(line_1_ptr, direction);
     const wchar_t* line_2 = move_to_alphabet_sym(line_2_ptr, direction);
 
-
-
     while (*line_1 == *line_2)
     {
         if (*line_1 == L'\n')
@@ -244,6 +240,7 @@ static int compare_lines(const wchar_t* line_1_ptr, const wchar_t* line_2_ptr, c
         line_1 += direction;
         line_2 += direction;
     }
+
     DEBUG("return %d\n", *line_1 - *line_2);
     DEBUG("--------------------------\n");
     return *line_1 - *line_2;

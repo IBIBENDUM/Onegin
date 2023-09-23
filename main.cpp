@@ -18,7 +18,6 @@ static void print_help();
 
 int main(const int argc, char* const* argv)
 {
-
     if (handle_cmd_args(argc, argv))
         return 1;
 
@@ -32,12 +31,12 @@ int main(const int argc, char* const* argv)
     line* lines_ptrs = parse_lines_to_arr(buffer, lines_amount);
     HANDLE_ERROR(lines_ptrs, "Error at lines parsing", 1);
     FILE* file_out = fopen(file_out_name, "wb");
-    _setmode(_fileno(file_out), 0x00040000);
+    _setmode(_fileno(file_out), 0x00040000); // Define mb?
     HANDLE_ERROR(file_out, "Error at file open", 1);
 
 // Make function for this
     DEBUG("START OUTPUT\n");
-    fwprintf(file_out, L"ENCYCLOPEDIA\n");
+    fwprintf(file_out, L"ENCYCLOPEDIJJJAAAA\n");
     print_seperator(file_out);
     quick_sort(lines_ptrs, lines_amount - 1, sizeof(lines_ptrs[0]), compare_lines_forward);
     write_in_dictionary_format(lines_ptrs, lines_amount, file_out);
